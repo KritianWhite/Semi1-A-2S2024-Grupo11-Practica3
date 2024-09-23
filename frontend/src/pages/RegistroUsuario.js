@@ -91,7 +91,11 @@ const RegistroUsuario = () => {
             } catch (err) {
                 setLoading(false); // Detiene el spinner al finalizar la petición
                 console.error(err);
-                Alertas.showToast(err.response.data.message, 'error');
+                if(err.response && err.response.data.message) {
+                    Alertas.showToast(err.response.data.message, 'error');
+                }else{
+                    Alertas.showToast('Error al registrar el usuario', 'error');
+                }
             }
         };
 

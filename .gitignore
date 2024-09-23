@@ -2,3 +2,15 @@
 backend/node/node_modules/
 
 backend/node/.env
+
+backend/python/.venv/
+
+backend/python/src/__pycache__/
+
+backend/python/src/routes/__pycache__/
+
+backend/python/src/aws/__pycache__/
+
+backend/python/src/controllers/__pycache__/
+
+backend/python/src/database/__pycache__/
