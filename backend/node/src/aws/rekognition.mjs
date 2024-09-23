@@ -53,6 +53,7 @@ const extractText = async (buff) => {
   
     try {
       const response = await client.send(comando);
+      console.log(response);
       return response;
     } catch (error) {
       console.error(error);

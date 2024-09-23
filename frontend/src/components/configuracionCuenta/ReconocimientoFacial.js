@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Alert, Card, FormCheck, Container, Row, Col, Image, Button } from 'react-bootstrap';
+import React from 'react';
+import { Card, FormCheck, Container, Row, Image, Button } from 'react-bootstrap';
 import { CameraFill } from 'react-bootstrap-icons';
-import axios from 'axios';
-import Alertas from '../Alertas';
-import api_uri from '../../config';
 
 const ReconocimientoFacial = ({ usuario, handleReconocimientoFacialChange, face_id_data, handleOpenModal }) => {
 

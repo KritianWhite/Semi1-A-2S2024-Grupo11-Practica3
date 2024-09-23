@@ -14,7 +14,7 @@ const FormularioRegistro = ({
       <Row>
         <Col xs={12} md={6}>
           <Form.Group className="mb-3" controlId="forUsuario">
-            <Form.Label htmlFor="username" className="form-label">
+            <Form.Label className="form-label">
               Nombre de usuario
             </Form.Label>
             <InputGroup hasValidation>
@@ -24,7 +24,6 @@ const FormularioRegistro = ({
               <Form.Control
                 type="text"
                 className="form-control"
-                id="username"
                 name="username"
                 placeholder="Ingresa de usuario"
                 value={formData.username}
@@ -35,7 +34,7 @@ const FormularioRegistro = ({
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="forPassword">
-            <Form.Label htmlFor="password" className="form-label">
+            <Form.Label className="form-label">
               Contraseña
             </Form.Label>
             <InputGroup hasValidation>
@@ -45,7 +44,6 @@ const FormularioRegistro = ({
               <Form.Control
                 type="password"
                 className="form-control"
-                id="password"
                 name="password"
                 placeholder="Ingresa tu contraseña"
                 value={formData.password}
@@ -57,7 +55,7 @@ const FormularioRegistro = ({
         </Col>
         <Col xs={12} md={6}>
           <Form.Group className="mb-3" controlId="formFirstName">
-            <Form.Label htmlFor="email" className="form-label">
+            <Form.Label className="form-label">
               Correo electrónico
             </Form.Label>
             <InputGroup hasValidation>
@@ -67,7 +65,6 @@ const FormularioRegistro = ({
               <Form.Control
                 type="email"
                 className="form-control"
-                id="email"
                 name="email"
                 placeholder="Ingresa tu correo electrónico"
                 aria-describedby="inputGroupPrepend"
@@ -80,7 +77,6 @@ const FormularioRegistro = ({
 
           <Form.Group className="mb-3" controlId="forRepeatPassword">
             <Form.Label
-              htmlFor="confirmPassword"
               className="form-label fw-normal"
             >
               Confirmar contraseña
@@ -92,7 +88,6 @@ const FormularioRegistro = ({
               <Form.Control
                 type="password"
                 className="form-control"
-                id="confirmPassword"
                 name="confirmPassword"
                 placeholder="Confirma tu contraseña"
                 value={formData.confirmPassword}
