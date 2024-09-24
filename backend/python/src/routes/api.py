@@ -15,3 +15,6 @@ def check():
 def register():
     return user['register']()
 
+@api_blueprint.route('/user/login_credentials', methods=['POST'])
+def login_credentials():
+    return user['login_credentials']()
