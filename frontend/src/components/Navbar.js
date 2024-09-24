@@ -6,7 +6,6 @@ function Navbar(location) {
     const navigate = useNavigate();
     
   const handleLogout = (e) => {
-    console.log("Cerrando sesión...");
     logout();
     navigate("/inicio-sesion");
   };
@@ -16,7 +15,7 @@ function Navbar(location) {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div className="container-fluid">
           <NavLink to="/" className="navbar-brand">
-            PHOTOBUCKET
+          <i className="bi bi-camera"></i> PHOTOBUCKET
           </NavLink>
           <button
             className="navbar-toggler"
@@ -31,29 +30,34 @@ function Navbar(location) {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto">
+            <li className="nav-item mx-2">
+                <NavLink to="/pagina-inicio" className="nav-link">
+                <i className="bi bi-house-door-fill"></i> Home
+                </NavLink>
+              </li>
               <li className="nav-item mx-2">
                 <NavLink to="/configuracion-cuenta" className="nav-link">
-                  <i class="bi bi-gear-fill"></i> Settings
+                  <i className="bi bi-gear-fill"></i> Settings
                 </NavLink>
               </li>
               <li className="nav-item mx-2">
                 <NavLink to="/vista-album" className="nav-link">
-                  <i class="bi bi-eye"></i> Watch
+                  <i className="bi bi-eye"></i> Watch
                 </NavLink>
               </li>
               <li className="nav-item mx-2">
                 <NavLink to="/editar-album" className="nav-link">
-                  <i class="bi bi-pencil-square"></i> Edit
+                  <i className="bi bi-pencil-square"></i> Edit
                 </NavLink>
               </li>
               <li className="nav-item mx-2">
                 <NavLink to="/cargar-imagen" className="nav-link">
-                  <i class="bi bi-upload"></i> Upload
+                  <i className="bi bi-upload"></i> Upload
                 </NavLink>
               </li>
               <li className="nav-item mx-2">
                 <NavLink to="/extraccion-texto" className="nav-link">
-                  <i class="bi bi-journal-text"></i> Text
+                  <i className="bi bi-journal-text"></i> Text
                 </NavLink>
               </li>
               <li className="nav-item mx-2">
