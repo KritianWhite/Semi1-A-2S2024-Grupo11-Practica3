@@ -55,9 +55,7 @@ const FormularioRegistro = ({
         </Col>
         <Col xs={12} md={6}>
           <Form.Group className="mb-3" controlId="formFirstName">
-            <Form.Label className="form-label">
-              Correo electrónico
-            </Form.Label>
+            <Form.Label className="form-label">Correo electrónico</Form.Label>
             <InputGroup hasValidation>
               <InputGroup.Text id="inputGroupPrepend">
                 <i className="bi bi-person"></i>
@@ -71,7 +69,11 @@ const FormularioRegistro = ({
                 value={formData.email}
                 onChange={handleChange}
                 required
+                isInvalid={!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) && formData.email !== ""}
               />
+              <Form.Control.Feedback type="invalid">
+                Por favor, ingresa un correo electrónico válido.
+              </Form.Control.Feedback>
             </InputGroup>
           </Form.Group>
 

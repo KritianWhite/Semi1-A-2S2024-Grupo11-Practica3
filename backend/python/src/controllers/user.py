@@ -70,10 +70,43 @@ def register():
         print(e)
         return jsonify({"status": 500, "message": "Error al registrar el usuario"}), 500
 
+def login():
+    try:
+        data = request.json
+        identifier = data.get('identifier') # puede ser el email o el nombre de usuario
+        password = data.get('password')
 
+        if not identifier or not password:
+            return jsonify({"status": 400, "message": "Faltan campos por rellenar"}), 400
+        
+        result = consult(f"select * from usuario where correo = '{identifier}' or nombre = '{identifier}';")
+
+        if result[0]['status'] == 200 and len(result[0]['result']) > 0:
+            user = result[0]['result'][0]
+
+            #comparamos la contraseña
+            if bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):
+                dataUser ={
+                    "id": user['id'],
+                    "username": user['nombre'],
+                    "email": user['correo'],
+                    "url_foto": user['url_foto'],
+                    "face_id_habilitado": bool(user['face_id_habilitado'])
+                }
+
+                return jsonify({"status": 200, "message": "Usuario logeado correctamente", "data_user": dataUser}), 200
+            else:
+                return jsonify({"status": 400, "message": "Contraseña incorrecta"}), 400
+
+        else:
+            return jsonify({"status": 404, "message": "Usuario no encontrado"}), 404
+    except Exception as e:
+        print(e)
+        return jsonify({"status": 500, "message": "Error al logear al usuario"}), 500
 
 user = {
     "register": register,
+    "login_credentials": login,
 }
     
 
