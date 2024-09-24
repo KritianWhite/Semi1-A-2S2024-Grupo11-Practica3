@@ -28,7 +28,7 @@ const PaginaInicio = () => {
     return (
         <>
             <div className="col-md-8">
-                <PerfilUsuario usuario={usuario} />
+                <PerfilUsuario usuario={usuario}/>
                 <div className="row mt-4">
                     <div className="col-md-6">
                         <Funcionalidad icon="settings" texto="Configuración de la cuenta" link="/configuracion-cuenta" />

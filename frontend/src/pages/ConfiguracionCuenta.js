@@ -11,7 +11,11 @@ import Modal from 'react-bootstrap/Modal';
 import FormReconocimientoFacial from '../components/configuracionCuenta/FormReconocimientoFacial';
 
 const ConfiguracionCuenta = () => {
-    const [usuario, setUsuario] = useState({});
+    const [usuario, setUsuario] = useState({
+        username: '', // Valor predeterminado para el nombre
+        email: '', // Valor predeterminado para el correo
+        face_id_habilitado: false // Si es necesario, inicializa otros campos
+    });
     const [face_id_data, setFaceIdData] = useState(undefined); // Información del reconocimiento facial prinicipalmente la foto
     const [showModalFaceRecognition, setShowModalFaceRecognition] = useState(false);
     const navigate = useNavigate();
@@ -75,7 +79,7 @@ const ConfiguracionCuenta = () => {
         setShowModalFaceRecognition(true);
     }
 
-    const handleReconocimientoFacialChange = () => {
+    const handleReconocimientoFacialChange = (e) => {
         if (face_id_data) { //si hay datos de reconocimiento facial entonces enviamos peticion para cambiar el estado en la base de datos
             const data_user = getLocalStorage('data_user');
             axiosToggleFaceId(data_user);
@@ -111,9 +115,6 @@ const ConfiguracionCuenta = () => {
     return (
         <>
             <div className="col-md-8 my-4">
-                <h1 className="text-center">Configuración de la Cuenta</h1>
-
-                <a href="/pagina-inicio" className="d-block mt-2 mb-2 text-left">Regresar</a>
                 <InformacionPersonal
                     usuario={usuario}
                     handleInputChange={handleInputChange}

@@ -1,8 +1,8 @@
 import * as bcrypt from "bcrypt";
 import { consult } from "../database/database.mjs";
-import config from "../config.mjs";
 import { uploadImageS3, deleteObjectS3 } from "../aws/s3.mjs";
 import { compareFaces } from "../aws/rekognition.mjs";
+import config from "../config.mjs";
 
 const register = async (req, res) => {
     const { username, email, password, profileImage } = req.body;
@@ -191,7 +191,6 @@ const obtenerDatosReconocimientoFacial = async (req, res) => {
         if(id === undefined){
             return res.status(400).json({status: 400, message: "Faltan campos por rellenar"});
         }
-
         //validamos que el usuario exista
         const resultUser = await consult(`select * from usuario where id=${id};`);
 
@@ -201,19 +200,16 @@ const obtenerDatosReconocimientoFacial = async (req, res) => {
 
         //validamos que el usuario tenga un rostro registrado
         const resultFace = await consult(`select * from rostros_usuarios where usuario_id=${id};`);
-
+       
         if(resultFace[0].result.length === 0){
             return res.status(404).json({status: 404, message: "El usuario no tiene un rostro registrado"});
         }
-
         const face = resultFace[0].result[0];
 
         const faceId = {
             id: face.id,
-            url_foto_s3: face.key_s3
-            //url_foto_s3: `https://${config.bucket}.s3.${config.region}.amazonaws.com/${face.key_s3}`
+            url_foto_s3: `https://${config.bucket}.s3.${config.region}.amazonaws.com/${face.key_s3}`
         }
-
         return res.status(200).json({status: 200, face_id_data: faceId});
     }catch(err){
         console.error(err);
@@ -296,7 +292,6 @@ const loginFaceId = async (req, res) => {
             return res.status(500).json({status: 500, message: "Error al validar rostro"});
         }
 
-        console.log(response);
 
         if(response.FaceMatches.length > 0){
             const data_user = {
@@ -323,5 +318,5 @@ export const user = {
     registrarRostro,
     obtenerDatosReconocimientoFacial,
     toggleFaceId,
-    loginFaceId
+    loginFaceId,
 };

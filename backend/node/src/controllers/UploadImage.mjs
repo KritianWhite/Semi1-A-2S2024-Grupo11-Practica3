@@ -39,7 +39,7 @@ const Upload = async (req, res) => {
       });
     }
 
-    //despues de subir a s3, elimino el archivo temporal
+    //despues de subir a s3, elimino el archivo temporal, aunque de error
     const response = await UploadS3_(filePath, fileName, fileType, CarpetaS3);
     if (!response) {
       return res.status(500).json({ error: "Error al subir el archivo a S3" });

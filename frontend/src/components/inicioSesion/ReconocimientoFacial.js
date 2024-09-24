@@ -31,7 +31,6 @@ const ReconocimientoFacial = ({ setIsAuthenticated }) => {
         axios.post(`${api_uri}/user/compare_faces`, data)
             .then(res => {
                 if (res.status === 200) {
-                    console.log('Usuario autenticado:', res.data);
                     setIsAuthenticated(true);
                     setLocalStorage('data_user', res.data.data_user);
                     //redirigimos al usuario a la página de inicio
@@ -51,7 +50,7 @@ const ReconocimientoFacial = ({ setIsAuthenticated }) => {
     return (
         <form className="mb-3">
             <div className="mb-3">
-                <label htmlFor="username" className="form-label">Usuario o Correo Electrónico</label>
+                <label className="form-label">Usuario o Correo Electrónico</label>
                 <input
                     type="text"
                     className="form-control"
@@ -63,7 +62,7 @@ const ReconocimientoFacial = ({ setIsAuthenticated }) => {
                 />
             </div>
             <div className="mb-1">
-                <label htmlFor="username" className="form-label">Rostro:</label>
+                <label className="form-label">Rostro:</label>
 
             </div>
             

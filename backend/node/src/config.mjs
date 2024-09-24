@@ -17,8 +17,8 @@ export default {
     password: process.env.PASSWORD || "",
 
 
-    
-    region: process.env.REGION || "",
+    /****************Credenciales mias******************* */
+    region_ha: process.env.REGION_HA || "",
     // credenciales S3
     accessKeyId_s3: process.env.ACCESS_KEY_ID_S3 || "",
     secretAccessKey_s3: process.env.SECRET_ACCESS_KEY_S3 || "",
@@ -32,9 +32,15 @@ export default {
     //credenciales Translate
     accessKeyId_translate: process.env.ACCESS_KEY_ID_TRANSLATE || "",
     secretAccessKey_translate: process.env.SECRET_ACCESS_KEY_TRANSLATE  || "",
+    /************************************************************* */
+    
 
+    accessKeyId: process.env.ACCESS_KEY_ID || "",
+    secretAccessKey: process.env.SECRET_ACCESS_KEY || "",
+    region: process.env.REGION || "",
+    bucket: process.env.BUCKET  || "",
+    
     //credenciales Rekognition
-
     rekognition: {
         accessKeyId: process.env.REKOGNITION_ACCESS_KEY_ID || "",
         secretAccessKey: process.env.REKOGNITION_SECRET_ACCESS_KEY || "",

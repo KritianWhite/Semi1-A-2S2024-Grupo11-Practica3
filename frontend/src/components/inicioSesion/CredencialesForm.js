@@ -6,7 +6,7 @@ const CredencialesForm = ({ credentials, onCredentialsChange, onSubmit }) => {
   return (
     <Form onSubmit={onSubmit} className="mb-3">
       <Form.Group className="mb-3" controlId="forEmail">
-        <Form.Label htmlFor="username" className="form-label">
+        <Form.Label className="form-label">
           Usuario o Correo Electrónico
         </Form.Label>
         <InputGroup hasValidation>
@@ -17,7 +17,6 @@ const CredencialesForm = ({ credentials, onCredentialsChange, onSubmit }) => {
             type="text"
             className="form-control"
             placeholder="Ingrese su usuario o correo electrónico"
-            id="username"
             name="username"
             value={credentials.username}
             onChange={onCredentialsChange}
@@ -27,7 +26,7 @@ const CredencialesForm = ({ credentials, onCredentialsChange, onSubmit }) => {
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="forPassword">
-        <Form.Label htmlFor="password" className="form-label">
+        <Form.Label className="form-label">
           Contraseña
         </Form.Label>
         <InputGroup hasValidation>
@@ -38,7 +37,6 @@ const CredencialesForm = ({ credentials, onCredentialsChange, onSubmit }) => {
             type="password"
             className="form-control"
             placeholder="Ingrese su contraseña"
-            id="password"
             name="password"
             value={credentials.password}
             onChange={onCredentialsChange}
