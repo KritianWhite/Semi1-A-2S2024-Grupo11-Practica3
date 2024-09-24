@@ -27,19 +27,23 @@ def uploadImageS3(buff, path):
         print("Error al subir la imagen a S3" + str(e))
         return None
 
-def deleteObjectS3(path):  #se recibe el path dentro del bucket, no la url completa
-    #Configuracion del cliente S3
-    s3_client = boto3.client(
-        's3',
-        region_name=config['region'],
-        aws_access_key_id=config['accessKeyId'],
-        aws_secret_access_key=config['secretAccessKey']
-    )
-
+def deleteObjectS3(path):
+    
     try:
+        parts = path.split("/")
+        parts = parts[-2] + "/" + parts[-1]
+
+        #Configuracion del cliente S3
+        s3_client = boto3.client(
+            's3',
+            region_name=config['region'],
+            aws_access_key_id=config['accessKeyId'],
+            aws_secret_access_key=config['secretAccessKey']
+        )
+
         response = s3_client.delete_object(
             Bucket=config['bucket'],
-            Key=path
+            Key=parts
         )
 
         return response
