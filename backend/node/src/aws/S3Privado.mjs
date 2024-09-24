@@ -11,13 +11,13 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 const client = new S3Client({
   region: config.region,
   credentials: {
-    accessKeyId: config.accessKeyId,
-    secretAccessKey: config.secretAccessKey,
+    accessKeyId: config.accessKeyId_s3,
+    secretAccessKey: config.secretAccessKey_s3,
   },
 });
 
-const UploadS3 = async (filePath, fileName, fileType, folder) => {
-
+//aquí se sube el archivo a S3, sin utilizar base64
+const UploadS3_ = async (filePath, fileName, fileType, folder) => {
   try {
     // Leer el archivo temporal desde el sistema de archivos
     const fileContent = fs.readFileSync(filePath);
@@ -26,37 +26,39 @@ const UploadS3 = async (filePath, fileName, fileType, folder) => {
     const upload = new Upload({
       client,
       params: {
-        Bucket: config.bucket, //bucket s3
+        Bucket: config.bucket_s3, //bucket s3
         Key: `${folder}/${fileName}`, //nombre del archivo en s3
         Body: fileContent, //contenido del archivo
         ContentType: fileType, //tipo MIME
       },
     });
-  
-
-    // Ejecutar el comando para subir el archivo a S3
-    const response = await upload.done();
 
     // Borrar el archivo temporal del servidor una vez que se sube a S3
     fs.unlinkSync(filePath);
 
-    return true;
+    const response = await upload.done();
+    if (response.$metadata.httpStatusCode !== 200) {
+      console.error(
+        "Error al subir la imagen. Código de estado:",
+        response.$metadata.httpStatusCode
+      );
+      return false;
+    }
 
+    console.log("La imagen se ha subido correctamente.");
+    //console.log("URL de la imagen:", response.Location);
+    return true;
   } catch (error) {
-    console.error('Error al subir el archivo a S3:', error);
-    // Borrar el archivo temporal en caso de error
+    console.error("Error al subir el archivo a S3:", error);
     fs.unlinkSync(filePath);
     return false;
   }
-}
-  
+};
 
 const generateSignedUrl = async (path) => {
-
-  // Crear el comando para obtener el objeto en S3
   const getObjectCommand = new GetObjectCommand({
-    Bucket: config.bucket, // Bucket en S3
-    Key: path, // Nombre del archivo en S3, lo pasas como argumento
+    Bucket: config.bucket_s3,
+    Key: path,
   });
 
   try {
@@ -69,10 +71,9 @@ const generateSignedUrl = async (path) => {
   }
 };
 
-
 const deleteObjectS3 = async (path) => {
   const command = new DeleteObjectCommand({
-    Bucket: config.bucket,
+    Bucket: config.bucket_s3,
     Key: path,
   });
 
@@ -84,6 +85,5 @@ const deleteObjectS3 = async (path) => {
     return null;
   }
 };
-//path para subir a S3
 
-export { UploadS3, deleteObjectS3, generateSignedUrl };
+export { UploadS3_, deleteObjectS3, generateSignedUrl };

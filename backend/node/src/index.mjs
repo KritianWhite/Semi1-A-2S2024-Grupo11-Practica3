@@ -1,7 +1,8 @@
 import app from './app.mjs';
 import { closePool } from './database/database.mjs';
 
-const main = () => {
+const main = async () => {
+
 	app.listen(app.get("port"), () => {
 		console.log(`Server on port ${app.get("port")}`);
 	  });

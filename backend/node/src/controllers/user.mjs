@@ -16,7 +16,7 @@ const register = async (req, res) => {
 
         const resultEmail = await consult(`select * from usuario where correo= '${email}';`);
         const resultUsername = await consult(`select * from usuario where nombre= '${username}';`);
-        console.log(resultEmail);
+
         if (resultEmail[0].status == 200 && resultEmail[0].result.length > 0) {
             return res.status(400).json({ status: 400, message: "El email ya está en uso" });
         }
@@ -37,7 +37,8 @@ const register = async (req, res) => {
             return res.status(500).json({ status: 500, message: "Error al subir la imagen" });
         }
 
-        const url = `https://${config.bucket}.s3.${config.region}.amazonaws.com/Fotos_Perfil/${nombreImagen}`;
+        const url = `Fotos_Perfil/${nombreImagen}`;
+        //const url = `https://${config.bucket}.s3.${config.region}.amazonaws.com/Fotos_Perfil/${nombreImagen}`;
 
         //encriptamos la contraseña
         const hash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
@@ -209,7 +210,8 @@ const obtenerDatosReconocimientoFacial = async (req, res) => {
 
         const faceId = {
             id: face.id,
-            url_foto_s3: `https://${config.bucket}.s3.${config.region}.amazonaws.com/${face.key_s3}`
+            url_foto_s3: face.key_s3
+            //url_foto_s3: `https://${config.bucket}.s3.${config.region}.amazonaws.com/${face.key_s3}`
         }
 
         return res.status(200).json({status: 200, face_id_data: faceId});
