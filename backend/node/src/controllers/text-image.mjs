@@ -4,7 +4,7 @@ const returntext = async (req, res) => {
     try {
         const { image } = req.body;        
         const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
-        console.log(base64Data);
+
         const buffer = Buffer.from(base64Data, "base64");
         const response = await extractText(buffer);
         const text = response.TextDetections.filter(
