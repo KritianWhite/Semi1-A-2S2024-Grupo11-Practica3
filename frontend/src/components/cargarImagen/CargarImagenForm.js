@@ -12,10 +12,12 @@ const CargarImagenForm = ({
     albums,
     handleFileSelect,
     previewUrl,
-    handleSubmit
+    handleSubmit,
+    fileInputRef
 }) => {
     return (
-        <Card>
+       <div>
+         <Card>
             <Card.Header>
                 <Card.Title>Formulario de carga de imágenes</Card.Title>
             </Card.Header>
@@ -56,13 +58,24 @@ const CargarImagenForm = ({
 
                     <Form.Group controlId="image-file" className="mb-3">
                         <Form.Label>Seleccionar imagen</Form.Label>
-                        <Form.Control type="file" accept="image/*" onChange={handleFileSelect} required />
+                        <Form.Control 
+                            type="file" 
+                            accept="image/*" 
+                            ref={fileInputRef}
+                            onChange={handleFileSelect} 
+                            required 
+                        />
                     </Form.Group>
 
                     {previewUrl && (
                         <div className="mt-4">
                             <h3 className="text-lg font-semibold mb-2">Vista previa:</h3>
-                            <img src={previewUrl} alt="Vista previa" className="img-fluid rounded-lg" />
+                            <img src={previewUrl} alt="Vista previa" 
+                            className="img-fluid rounded-lg mx-auto d-block"
+                            style={{
+                                maxWidth: '100%',
+                                maxHeight: '300px'
+                            }} />
                         </div>
                     )}
                 </Form>
@@ -73,6 +86,7 @@ const CargarImagenForm = ({
                 </Button>
             </Card.Footer>
         </Card>
+       </div>
     );
 };
 

@@ -8,11 +8,11 @@ const Add = async (req, res) => {
       return res.status(400).json({ message: "Faltan datos" });
     }
     const query = `INSERT INTO album (usuario_id, nombre) VALUES (${usuario_id}, '${nombre}');`;
- 
+
     const response = await consult(query);
 
     if (response[0].status !== 200) {
-        console.error("Error al crear el album", response[0].message);
+      console.error("Error al crear el album", response[0].message);
       return res.status(400).json({ message: "Error al crear el album" });
     }
     return Get(req, res);
@@ -28,7 +28,7 @@ const Get = async (req, res) => {
     const { usuario_id } = req.body;
 
     if (!usuario_id) {
-        return res.status(400).json({ message: "Faltan datos" });
+      return res.status(400).json({ message: "Faltan datos" });
     }
 
     const query = `
@@ -63,10 +63,24 @@ const Get = async (req, res) => {
 const Update = async (req, res) => {
   try {
     const { album_id, nombre, usuario_id } = req.body;
-    console.log(req.body);
 
     if (!album_id || !nombre || !usuario_id) {
       return res.status(400).json({ message: "Faltan datos" });
+    }
+
+    //no se puede cambiar el nombre del album de fotos de perfil
+    const fotos_perfil = await consult(
+      `SELECT MIN(id) AS id FROM album WHERE usuario_id = ${usuario_id};`
+    );
+    if (fotos_perfil[0].status !== 200 || fotos_perfil[0].result.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No se ha podido renombrar el album" });
+    }
+    if (fotos_perfil[0].result[0].id == album_id) {
+      return res.status(400).json({
+        message: "No se puede cambiar el nombre del album de fotos de perfil",
+      });
     }
 
     const query = `UPDATE album SET nombre = '${nombre}' WHERE id = ${album_id};`;
@@ -91,6 +105,23 @@ const Delete = async (req, res) => {
     if (!album_id || !usuario_id) {
       return res.status(400).json({ message: "Faltan datos" });
     }
+
+    const fotos_perfil = await consult(
+      `SELECT MIN(id) AS id FROM album WHERE usuario_id = ${usuario_id};`
+    );
+
+    //no se puede eliminar el album de fotos de perfil
+    if (fotos_perfil[0].status !== 200 || fotos_perfil[0].result.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No se ha podido renombrar el album" });
+    }
+    if (fotos_perfil[0].result[0].id == album_id) {
+      return res.status(400).json({
+        message: "No se puede cambiar el nombre del album de fotos de perfil",
+      });
+    }
+
     //obtengo todas lar url de las imagenes del album en s3
     const getUrl = await consult(
       `Select url_s3 as Url from imagen where album_id=${album_id};`

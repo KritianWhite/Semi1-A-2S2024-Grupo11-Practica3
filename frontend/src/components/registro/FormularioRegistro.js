@@ -14,9 +14,7 @@ const FormularioRegistro = ({
       <Row>
         <Col xs={12} md={6}>
           <Form.Group className="mb-3" controlId="forUsuario">
-            <Form.Label className="form-label">
-              Nombre de usuario
-            </Form.Label>
+            <Form.Label className="form-label">Nombre de usuario</Form.Label>
             <InputGroup hasValidation>
               <InputGroup.Text id="inputGroupPrepend">
                 <i className="bi bi-person"></i>
@@ -34,9 +32,7 @@ const FormularioRegistro = ({
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="forPassword">
-            <Form.Label className="form-label">
-              Contraseña
-            </Form.Label>
+            <Form.Label className="form-label">Contraseña</Form.Label>
             <InputGroup hasValidation>
               <InputGroup.Text id="inputGroupPrepend">
                 <i className="bi bi-lock"></i>
@@ -69,18 +65,12 @@ const FormularioRegistro = ({
                 value={formData.email}
                 onChange={handleChange}
                 required
-                isInvalid={!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) && formData.email !== ""}
               />
-              <Form.Control.Feedback type="invalid">
-                Por favor, ingresa un correo electrónico válido.
-              </Form.Control.Feedback>
             </InputGroup>
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="forRepeatPassword">
-            <Form.Label
-              className="form-label fw-normal"
-            >
+            <Form.Label className="form-label fw-normal">
               Confirmar contraseña
             </Form.Label>
             <InputGroup hasValidation>
@@ -105,9 +95,7 @@ const FormularioRegistro = ({
         </Col>
         <Col xs={12}>
           <div className="mb-3">
-            <label htmlFor="profileImage" className="form-label">
-              Imagen de perfil
-            </label>
+            <label className="form-label">Imagen de perfil</label>
             <Col className="text-center mb-2 mt-1">
               <div className="image-container">
                 <img

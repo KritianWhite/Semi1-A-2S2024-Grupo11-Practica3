@@ -6,7 +6,7 @@ const Alertas2 = {
       icon: "success",
       title: "¡Éxito!",
       text: message,
-      timer: 800,
+      timer: 1000,
       showConfirmButton: false
     });
   },
@@ -15,7 +15,7 @@ const Alertas2 = {
       icon: "error",
       title: "¡Error!",
       text: message,
-      timer: 800,
+      timer: 1000,
       showConfirmButton: false
     });
   },

@@ -25,6 +25,8 @@ const AlbumEdit = () => {
   useEffect(() => {
     AlbumGetApi().then((response) => {
       setAlbums(response.albums);
+    }).catch((error) => {
+      console.error(error);
     });
   }, []);
 
@@ -44,7 +46,7 @@ const AlbumEdit = () => {
         setIsAddDialogOpen(false);
       })
       .catch((error) => {
-        Alertas2.showError("Error al agregar el álbum");
+        Alertas2.showError("Error al agregar el álbum: " + error.message);
         console.error(error);
       });
   };
@@ -60,7 +62,7 @@ const AlbumEdit = () => {
           setIsEditDialogOpen(false);
         })
         .catch((error) => {
-          Alertas2.showError("Error al editar el álbum");
+          Alertas2.showError("Error al editar el álbum: " + error.message);
           console.error(error);
         });
     }
@@ -75,7 +77,7 @@ const AlbumEdit = () => {
           setIsDeleteDialogOpen(false);
         })
         .catch((error) => {
-          Alertas2.showError("Error al eliminar el álbum");
+          Alertas2.showError("Error al eliminar el álbum: " + error.message);
           console.error(error);
         });
     }
