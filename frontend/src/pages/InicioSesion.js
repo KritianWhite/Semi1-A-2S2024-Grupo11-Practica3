@@ -35,7 +35,6 @@ const InicioSesion = ({ setIsAuthenticated }) => {
         axios.post(api_uri+ '/user/login_credentials', data)
             .then(res => {
                 if (res.status === 200) {
-                    console.log('Usuario autenticado:', res.data);
                     setIsAuthenticated(true);
                     setLocalStorage('data_user', res.data.data_user);
                     //redirigimos al usuario a la página de inicio
