@@ -14,7 +14,7 @@ const FormularioRegistro = ({
       <Row>
         <Col xs={12} md={6}>
           <Form.Group className="mb-3" controlId="forUsuario">
-            <Form.Label className="form-label">
+            <Form.Label htmlFor="username" className="form-label">
               Nombre de usuario
             </Form.Label>
             <InputGroup hasValidation>
@@ -24,6 +24,7 @@ const FormularioRegistro = ({
               <Form.Control
                 type="text"
                 className="form-control"
+                id="username"
                 name="username"
                 placeholder="Ingresa de usuario"
                 value={formData.username}
@@ -34,7 +35,7 @@ const FormularioRegistro = ({
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="forPassword">
-            <Form.Label className="form-label">
+            <Form.Label htmlFor="password" className="form-label">
               Contraseña
             </Form.Label>
             <InputGroup hasValidation>
@@ -44,6 +45,7 @@ const FormularioRegistro = ({
               <Form.Control
                 type="password"
                 className="form-control"
+                id="password"
                 name="password"
                 placeholder="Ingresa tu contraseña"
                 value={formData.password}
@@ -55,7 +57,9 @@ const FormularioRegistro = ({
         </Col>
         <Col xs={12} md={6}>
           <Form.Group className="mb-3" controlId="formFirstName">
-            <Form.Label className="form-label">Correo electrónico</Form.Label>
+            <Form.Label htmlFor="email" className="form-label">
+              Correo electrónico
+            </Form.Label>
             <InputGroup hasValidation>
               <InputGroup.Text id="inputGroupPrepend">
                 <i className="bi bi-person"></i>
@@ -63,22 +67,20 @@ const FormularioRegistro = ({
               <Form.Control
                 type="email"
                 className="form-control"
+                id="email"
                 name="email"
                 placeholder="Ingresa tu correo electrónico"
                 aria-describedby="inputGroupPrepend"
                 value={formData.email}
                 onChange={handleChange}
                 required
-                isInvalid={!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) && formData.email !== ""}
               />
-              <Form.Control.Feedback type="invalid">
-                Por favor, ingresa un correo electrónico válido.
-              </Form.Control.Feedback>
             </InputGroup>
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="forRepeatPassword">
             <Form.Label
+              htmlFor="confirmPassword"
               className="form-label fw-normal"
             >
               Confirmar contraseña
@@ -90,6 +92,7 @@ const FormularioRegistro = ({
               <Form.Control
                 type="password"
                 className="form-control"
+                id="confirmPassword"
                 name="confirmPassword"
                 placeholder="Confirma tu contraseña"
                 value={formData.confirmPassword}

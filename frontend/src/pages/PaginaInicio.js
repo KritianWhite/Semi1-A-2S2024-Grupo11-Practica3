@@ -16,7 +16,7 @@ const PaginaInicio = () => {
             navigate('/inicio-sesion');
         }
         setUsuario(data_user);
-    }, []
+    }, [navigate]
     );
 
     const handleLogout = (e) => {

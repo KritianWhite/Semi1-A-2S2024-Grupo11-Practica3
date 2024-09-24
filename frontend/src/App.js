@@ -28,7 +28,7 @@ function App() {
 }
 
 function Layout({ isAuthenticated, setIsAuthenticated }) {
-  const location = useLocation(); // Ahora está dentro de Router
+  const location = useLocation();
 
   // Verifica si la ruta actual es de inicio de sesión o registro
   //const isAuthPage = location.pathname === '/inicio-sesion' || location.pathname === '/registro-usuario';
@@ -36,6 +36,7 @@ function Layout({ isAuthenticated, setIsAuthenticated }) {
 
   return (
     <>
+    
       {!hideNavbarPaths.includes(location.pathname) && <Navbar />}
       <AuxNavBar>
         <Routes>
@@ -47,7 +48,6 @@ function Layout({ isAuthenticated, setIsAuthenticated }) {
           <Route path="/editar-album" element={<AlbumEdit showNavBar={true}/>} />
           <Route path="/cargar-imagen" element={<CargarImagen showNavBar={true}/>} />
           <Route path="/extraccion-texto" element={<ExtracionTexto showNavBar={true}/>} />
-              {/* Otras rutas que necesitan autenticación */}
           <Route path="*" element={<Navigate to="/inicio-sesion" />} />
           </Routes>
 
