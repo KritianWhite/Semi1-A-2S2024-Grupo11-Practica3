@@ -7,7 +7,6 @@ const getTags = async (req, res) => {
 
   try {
     const { id, descripcion } = req.body;
-    console.log(id, descripcion);
     if (!id || !descripcion) {
       res.status(400).json({ message: "id and descripcion are required" });
       return;

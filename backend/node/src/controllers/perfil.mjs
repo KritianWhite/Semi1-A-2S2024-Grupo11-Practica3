@@ -1,6 +1,5 @@
 import { consult } from "../database/database.mjs";
-import { generateSignedUrl } from "../aws/S3Privado.mjs";
-import { UploadS3_ } from "../aws/S3Privado.mjs";
+import { generateSignedUrl, UploadS3_, deleteObjectS3 } from "../aws/S3Privado.mjs";
 import * as bcrypt from "bcrypt";
 
 const getProfileImage = async (req, res) => {
@@ -131,7 +130,55 @@ const update = async (req, res) => {
   }
 };
 
+const deleteAccount = async (req, res) => {
+  try {
+    const { id, password } = req.body;
+
+    if (id === undefined || password === undefined) {
+      return res.status(400).json({ message: "Faltan datos" });
+    }
+
+    const datos = await consult(`SELECT * FROM usuario WHERE id=${id};`);
+    if (datos[0].status !== 200 || datos[0].result.length === 0) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    if (!bcrypt.compareSync(password, datos[0].result[0].password)) {
+      return res
+        .status(401)
+        .json({ status: 401, message: "Contraseña incorrecta" });
+    }
+
+    const url = await consult(`
+        select url_s3 from imagen im 
+        INNER JOIN album al ON al.id = im.album_id
+        INNER JOIN usuario us ON us.id = al.usuario_id
+        where us.id = ${id};`);
+    
+    if (url[0].status !== 200) {
+      return res.status(500).json({ message: "Error al obtener las imágenes" });
+    }
+
+    //eliminar las imágenes de S3
+    for (let i = 0; i < url[0].result.length; i++) {
+      const url_s3 = url[0].result[i].url_s3;
+      deleteObjectS3(url_s3);
+    }
+
+    //eliminar las imágenes de la base de datos
+    const query = await consult(`DELETE FROM usuario WHERE id=${id};`);
+    if (query[0].status !== 200) {
+      return res.status(500).json({ message: "Error al eliminar la cuenta" });
+    }
+    return res.status(200).json({ status: 200, message: "Cuenta eliminada correctamente" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Error al eliminar la cuenta" });
+  }
+};
+
 export const profile = {
   getProfileImage,
   update,
+  deleteAccount,
 };
