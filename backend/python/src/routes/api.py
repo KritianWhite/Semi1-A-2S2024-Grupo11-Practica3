@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from config import config
 from controllers.user import user
+from controllers.textImage import text
 
 api_blueprint = Blueprint('api', __name__)
 
@@ -34,3 +35,8 @@ def toggle_face_id():
 @api_blueprint.route('/user/compare_faces', methods=['POST'])
 def compare_faces():
     return user['loginFaceId']()
+
+# Texto en imagen
+@api_blueprint.route('/image/extract-text', methods=['POST'])
+def extract_text():
+    return text['extraerTexto']()
