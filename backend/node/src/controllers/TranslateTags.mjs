@@ -27,7 +27,7 @@ const getTags = async (req, res) => {
         tagsArray.push({ tag, color: getRandomColor() });
     });
 
-    return res.json(tagsArray);
+    return res.json(tagsArray.slice(0, 10));
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
