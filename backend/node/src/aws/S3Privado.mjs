@@ -5,6 +5,7 @@ import {
   S3Client,
   DeleteObjectCommand,
   GetObjectCommand,
+  PutObjectCommand
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
@@ -55,6 +56,25 @@ const UploadS3_ = async (filePath, fileName, fileType, folder) => {
   }
 };
 
+const uploadS3_base64 = async (buff, path) => {
+  const command = new PutObjectCommand({
+    Bucket: config.bucket_s3,
+    Key: path,
+    Body: buff,
+    ContentType: "image/jpeg",
+  });
+
+  try {
+    const response = await client.send(command);
+    return response;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }finally{
+    client.destroy();
+  }
+};
+
 const generateSignedUrl = async (path) => {
   const getObjectCommand = new GetObjectCommand({
     Bucket: config.bucket_s3,
@@ -86,4 +106,4 @@ const deleteObjectS3 = async (path) => {
   }
 };
 
-export { UploadS3_, deleteObjectS3, generateSignedUrl };
+export { UploadS3_, deleteObjectS3, generateSignedUrl, uploadS3_base64 };

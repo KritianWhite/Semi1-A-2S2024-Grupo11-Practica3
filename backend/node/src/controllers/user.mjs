@@ -3,6 +3,7 @@ import { consult } from "../database/database.mjs";
 import { uploadImageS3, deleteObjectS3 } from "../aws/s3.mjs";
 import { compareFaces } from "../aws/rekognition.mjs";
 import config from "../config.mjs";
+import { uploadS3_base64 } from "../aws/S3Privado.mjs";
 
 const register = async (req, res) => {
     const { username, email, password, profileImage } = req.body;
@@ -31,7 +32,8 @@ const register = async (req, res) => {
         //creamos el nombre de la imagen con el nombre de usuario y la fecha formateado a solo numeros sin espacios
         const nombreImagen = username + "_" + (new Date().toLocaleDateString().replace(/\//g, "") + new Date().toLocaleTimeString().replace(/:/g, "")) + ".jpeg";
 
-        const response = await uploadImageS3(buff, "Fotos_Perfil/" + nombreImagen);
+        const response = await uploadS3_base64(buff, "Fotos_Perfil/" + nombreImagen);
+        //const response = await uploadImageS3(buff, "Fotos_Perfil/" + nombreImagen);
 
         if (response === null) {
             return res.status(500).json({ status: 500, message: "Error al subir la imagen" });

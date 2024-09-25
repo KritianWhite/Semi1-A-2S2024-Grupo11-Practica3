@@ -32,7 +32,7 @@ const InicioSesion = ({ setIsAuthenticated }) => {
             password: credentials.password
         }
         //hacemos la peticion al backend
-        axios.post(api_uri+ '/user/login_credentials', data)
+        axios.post(api_uri + '/user/login_credentials', data)
             .then(res => {
                 if (res.status === 200) {
                     setIsAuthenticated(true);

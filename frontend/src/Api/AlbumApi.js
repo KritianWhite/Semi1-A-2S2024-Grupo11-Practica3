@@ -39,6 +39,29 @@ export async function updateUserInfoApi(formData) {
   return data;
 }
 
+//para eliminar la cuenta
+export async function deleteAccountApi(password) {
+  const id = getLocalStorage("data_user").id;
+  const response = await fetch(`${api_uri}/user/delete`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id,
+      password,
+    }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || response.statusText);
+  }
+
+  return data;
+}
+
 export async function AlbumAddApi(usuario_id, nombre) {
   const response = await fetch(`${api_uri}/album/add`, {
     method: "POST",

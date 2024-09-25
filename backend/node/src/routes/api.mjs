@@ -36,6 +36,7 @@ router.get("/check", async (req, res) => {
 //obtener imagen de perfil
 router.post("/user/profile", profile.getProfileImage);
 router.post("/user/update", upload.single('file'), profile.update);
+router.post("/user/delete", profile.deleteAccount);
 
 // Rutas de usuario
 router.post("/user/register", user.register);
