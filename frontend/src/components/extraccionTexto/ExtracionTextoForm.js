@@ -29,12 +29,14 @@ const ExtracionTextoForm = ({
         {previewUrl && (
           <div className="mt-4">
             <h3 className="text-lg font-semibold mb-2">Vista previa:</h3>
-            <img
-              src={previewUrl}
-              alt="Vista previa"
-              className="img-fluid rounded-lg"
-              style={{ maxHeight: '256px' }}
-            />
+            <div className="d-flex justify-content-center">
+              <img
+                src={previewUrl}
+                alt="Vista previa"
+                className="img-fluid rounded-lg"
+                style={{ maxHeight: '256px' }}
+              />
+            </div>
           </div>
         )}
 

@@ -20,14 +20,13 @@ const EliminarCuenta = ({ handleEliminarCuenta }) => {
     };
 
     const handleConfirmDelete = () => {
-        if (password === '') {
+        if (password.length < 3) {
             setError('Por favor ingrese su contraseña para continuar.');
             return;
         }
-        // Aquí se validaría la contraseña antes de eliminar la cuenta
-        console.log('Contraseña ingresada:', password);
+        
         // Lógica para eliminar la cuenta
-        handleEliminarCuenta();
+        handleEliminarCuenta(password);
         // Cerrar el modal después de la acción
         handleClose();
     };
