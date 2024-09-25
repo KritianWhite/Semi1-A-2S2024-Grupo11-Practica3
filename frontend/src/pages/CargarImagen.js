@@ -37,7 +37,6 @@ const CargarImagen = () => {
     setisSubmitting(true);
     UploadImage(selectedAlbum, imageDescription, selectedFile)
       .then((response) => {
-        console.log(response);
         Alertas2.showSuccess("Imagen subida correctamente");
         setisSubmitting(false);
         setImageName("");

@@ -10,7 +10,7 @@ import config from "../config.mjs";
 
 // Configura el cliente de AWS Comprehend
 const comprehendClient = new ComprehendClient({
-  region: config.region, // Reemplaza con tu región
+  region: config.region_ha, // Reemplaza con tu región
   credentials: {
     accessKeyId: config.accessKeyId_comprehend, // O tu ACCESS_KEY_ID directamente
     secretAccessKey: config.secretAccessKey_comprehend, // O tu SECRET_ACCESS_KEY directamente
@@ -19,7 +19,7 @@ const comprehendClient = new ComprehendClient({
 
 // Configura el cliente de AWS Translate
 const translateClient = new TranslateClient({
-  region: config.region, // Reemplaza con tu región
+  region: config.region_ha, // Reemplaza con tu región
   credentials: {
     accessKeyId: config.accessKeyId_translate, // O tu ACCESS_KEY_ID directamente
     secretAccessKey: config.secretAccessKey_translate, // O tu SECRET_ACCESS_KEY directamente

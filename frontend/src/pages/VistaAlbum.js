@@ -16,7 +16,6 @@ const VistaAlbum = () => {
       .then((response) => {
         setSelectedImage({ ...image, tags: response });
         setIsSubmitting(false);
-        console.log(selectedImage);
       })
       .catch((error) => {
         setIsSubmitting(false);

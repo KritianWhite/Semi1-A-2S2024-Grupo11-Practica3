@@ -7,6 +7,7 @@ import path from 'path';
 import fs from 'fs';
 import {UploadImage} from '../controllers/UploadImage.mjs';
 import {TranslateTags} from '../controllers/TranslateTags.mjs';
+import { profile } from '../controllers/perfil.mjs';
 
 const router = Router();
 
@@ -31,6 +32,11 @@ const upload = multer({ storage: storage });
 router.get("/check", async (req, res) => {
     res.status(200).json({"status": 200, "message": "API Funcionando correctamente"});
 });
+
+//obtener imagen de perfil
+router.post("/user/profile", profile.getProfileImage);
+router.post("/user/update", upload.single('file'), profile.update);
+router.post("/user/delete", profile.deleteAccount);
 
 // Rutas de usuario
 router.post("/user/register", user.register);

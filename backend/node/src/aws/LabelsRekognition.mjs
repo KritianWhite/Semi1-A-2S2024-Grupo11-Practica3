@@ -4,7 +4,7 @@ import config from "../config.mjs";
 
 // Esto es para reconocer etiquetas en una imagen
 const rekogClient = new RekognitionClient({
-  region: config.region,
+  region: config.region_ha,
   credentials: {
     accessKeyId: config.accessKeyId_s3,
     secretAccessKey: config.secretAccessKey_s3,

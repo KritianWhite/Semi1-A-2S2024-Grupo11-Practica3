@@ -9,9 +9,16 @@ import api_uri from '../config';
 import Alertas from '../components/Alertas';
 import Modal from 'react-bootstrap/Modal';
 import FormReconocimientoFacial from '../components/configuracionCuenta/FormReconocimientoFacial';
+import { deleteAccountApi } from '../Api/AlbumApi';
+import { logout } from "../session";
+import Alertas2 from '../components/Alertas2';
 
 const ConfiguracionCuenta = () => {
-    const [usuario, setUsuario] = useState({});
+    const [usuario, setUsuario] = useState({
+        username: '', // Valor predeterminado para el nombre
+        email: '', // Valor predeterminado para el correo
+        face_id_habilitado: false // Si es necesario, inicializa otros campos
+    });
     const [face_id_data, setFaceIdData] = useState(undefined); // Información del reconocimiento facial prinicipalmente la foto
     const [showModalFaceRecognition, setShowModalFaceRecognition] = useState(false);
     const navigate = useNavigate();
@@ -75,7 +82,7 @@ const ConfiguracionCuenta = () => {
         setShowModalFaceRecognition(true);
     }
 
-    const handleReconocimientoFacialChange = () => {
+    const handleReconocimientoFacialChange = (e) => {
         if (face_id_data) { //si hay datos de reconocimiento facial entonces enviamos peticion para cambiar el estado en la base de datos
             const data_user = getLocalStorage('data_user');
             axiosToggleFaceId(data_user);
@@ -90,9 +97,21 @@ const ConfiguracionCuenta = () => {
         // Lógica para guardar los cambios en el backend
     };
 
-    const handleEliminarCuenta = () => {
-        console.log("Eliminando cuenta...");
-        // Lógica para eliminar la cuenta en el backend
+    const handleEliminarCuenta = (password) => {
+        deleteAccountApi(password).then(data => {
+
+            if (data.status === 200) {
+                // Lógica para redirigir al usuario a la página de inicio de sesión
+                Alertas2.showSuccess(data.message);
+                logout();
+                navigate('/inicio-sesion');
+            } else {
+                Alertas2.showError(data.message);
+            }
+        }).catch(err => {
+            Alertas2.showError(err.message);
+            console.error(err);
+        });
     };
 
     const handleReconocimientoFacialImageChange = () => {
@@ -111,9 +130,6 @@ const ConfiguracionCuenta = () => {
     return (
         <>
             <div className="col-md-8 my-4">
-                <h1 className="text-center">Configuración de la Cuenta</h1>
-
-                <a href="/pagina-inicio" className="d-block mt-2 mb-2 text-left">Regresar</a>
                 <InformacionPersonal
                     usuario={usuario}
                     handleInputChange={handleInputChange}
