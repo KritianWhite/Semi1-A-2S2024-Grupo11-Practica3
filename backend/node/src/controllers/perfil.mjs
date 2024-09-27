@@ -102,6 +102,20 @@ const update = async (req, res) => {
             .json({ message: "Error al obtener la imagen de perfil" });
         }
 
+        //Obtengo el album de fotos de perfil del usuario
+        const album = await consult(`SELECT id FROM album WHERE usuario_id=${id} AND nombre='Fotos de perfil';`);
+
+        if (album[0].status !== 200 || album[0].result.length === 0) {
+          return res.status(500).json({ message: "Error al obtener el album de fotos de perfil" });
+        }
+
+        //inserto la imagen en el album de fotos de perfil
+        const query2 = await consult(`INSERT INTO imagen (album_id, nombre, url_s3, descripcion, fecha_creacion) VALUES (${album[0].result[0].id}, '${fileName}', '${url}', '', current_timestamp);`);
+        if (query2[0].status !== 200) {
+          return res.status(500).json({ message: "Error al insertar la imagen en el album de fotos de perfil" });
+        }
+
+
         return res.status(200).json({
           message: "Información actualizada correctamente",
           url_foto: url_s3,
@@ -154,7 +168,7 @@ const deleteAccount = async (req, res) => {
         INNER JOIN album al ON al.id = im.album_id
         INNER JOIN usuario us ON us.id = al.usuario_id
         where us.id = ${id};`);
-    
+
     if (url[0].status !== 200) {
       return res.status(500).json({ message: "Error al obtener las imágenes" });
     }
@@ -165,11 +179,24 @@ const deleteAccount = async (req, res) => {
       deleteObjectS3(url_s3);
     }
 
+    //eliminar la imagen de reconocimiento facial
+
+    const url2 = await consult(`SELECT key_s3 FROM rostros_usuarios WHERE usuario_id=${id};`);
+
+    if (url2[0].status !== 200) {
+      return res.status(500).json({ message: "Error al obtener la imagen de reconocimiento facial" });
+    }
+
+    if (url2[0].result.length > 0) {
+      deleteObjectS3(url2[0].result[0].key_s3);
+    }
+
     //eliminar las imágenes de la base de datos
     const query = await consult(`DELETE FROM usuario WHERE id=${id};`);
     if (query[0].status !== 200) {
       return res.status(500).json({ message: "Error al eliminar la cuenta" });
     }
+
     return res.status(200).json({ status: 200, message: "Cuenta eliminada correctamente" });
   } catch (err) {
     console.error(err);

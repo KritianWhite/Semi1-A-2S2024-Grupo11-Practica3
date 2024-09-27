@@ -62,6 +62,13 @@ const RegistroUsuario = () => {
             return;
         }
 
+        //validamos el formato del correo
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) && formData.email !== "") {
+            Alertas.showToast('Por favor, ingresa un correo electrónico válido.', 'error');
+            return;
+        }
+        
         const fetchData = async () => {
 
             setLoading(true); // Inicia el spinner al comenzar la petición

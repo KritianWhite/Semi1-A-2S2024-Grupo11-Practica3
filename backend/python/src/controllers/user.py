@@ -7,6 +7,7 @@ import re
 import base64
 from aws.s3 import uploadImageS3, deleteObjectS3
 from aws.rekognition import compareFaces
+from aws.S3Privado import upload_s3_base64
 
 
 def register():
@@ -36,13 +37,13 @@ def register():
         #creamos el nombre de la imagen con el nombre de usuario y la fecha formateado a solo numeros sin espacios
         nombreImagen =  username + "_" + datetime.datetime.now().strftime("%Y%m%d%H%M%S") + ".jpeg"
 
-        response = uploadImageS3(buff, "Fotos_Perfil/" +nombreImagen)
+        response = upload_s3_base64(buff, "Fotos_Perfil/" +nombreImagen)
 
         if response is None:
             return jsonify({"status": 500, "message": "Error al subir la imagen"}), 500
         
-        url = "https://" + config['bucket'] + ".s3." + config['region'] + ".amazonaws.com/Fotos_Perfil/" + nombreImagen
-
+        #url = "https://" + config['bucket'] + ".s3." + config['region'] + ".amazonaws.com/Fotos_Perfil/" + nombreImagen
+        url = "Fotos_Perfil/" + nombreImagen
 
         hashedPassword = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt(rounds=10))
 
