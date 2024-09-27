@@ -61,3 +61,17 @@ def consult(texto):
     queries = [texto]
     result = [query_with_pool(pool, query) for query in queries]
     return result
+
+def close_all_connections():
+    try:
+        if pool:
+            active_connections = pool._cnx_queue.qsize()
+            print(f"Conexiones activas antes de cerrar: {active_connections}")
+            while active_connections > 0:
+                connection = pool.get_connection()
+                connection.close()
+                active_connections -= 1
+            print("Todas las conexiones han sido cerradas correctamente.")
+    except mysql.connector.Error as error:
+        print(f"Error cerrando las conexiones: {error}")
+
