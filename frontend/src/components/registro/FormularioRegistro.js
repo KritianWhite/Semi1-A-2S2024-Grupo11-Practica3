@@ -65,7 +65,11 @@ const FormularioRegistro = ({
                 value={formData.email}
                 onChange={handleChange}
                 required
+                isInvalid={!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) && formData.email !== ""}
               />
+              <Form.Control.Feedback type="invalid">
+                Por favor, ingresa un correo electrónico válido.
+              </Form.Control.Feedback>
             </InputGroup>
           </Form.Group>
 

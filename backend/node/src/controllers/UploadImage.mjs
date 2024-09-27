@@ -12,7 +12,7 @@ const Upload = async (req, res) => {
     const fileType = req.file.mimetype; // Tipo MIME del archivo
     const OriginalName = req.file.originalname; // Nombre original del archivo
     //const size = req.file.size; // Tamaño del archivo en bytes
-    const CarpetaS3 = "Album_seminario1";
+    const CarpetaS3 = "Fotos_Publicadas";
 
     const { album_id, descripcion, usuario_id } = req.body;
 
